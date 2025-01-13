@@ -2,8 +2,8 @@ import Image from 'next/image'
 
 export default function Home() {
   return (
-    <section className='shopify-section home-banner-section'>
-      <Image src='/img/home-banner-img.webp' alt='home-banner-img' width={300} height={200} priority />
+    <section className='home-banner-section'>
+      <Image src='/img/home-banner-img.webp' alt='home-banner-img' width={1000} height={1000} priority />
       <div className='container'>
         <div className='-ml-[15px] -mr-[15px] flex flex-wrap justify-center'>
           <div className='col-lg-7 col-md-8 col-12 '>
