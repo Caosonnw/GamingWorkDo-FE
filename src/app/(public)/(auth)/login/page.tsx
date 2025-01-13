@@ -37,35 +37,6 @@ export default function Login() {
         <div className='container max-w-[1280px] px-[15px]'>
           <div className='flex justify-center'>
             <div className='w-full lg:w-8/12 md:w-10/12'>
-              {/* <div id='recover' className='recover-password form-wrapper'>
-                <form method='post' action='/account/recover' acceptCharset='UTF-8' className='login-form-inner'>
-                  <input type='hidden' name='form_type' defaultValue='recover_customer_password' />
-                  <input type='hidden' name='utf8' defaultValue='✓' />
-                  <div className='section-title'>
-                    <h4>We will send you an email to reset your password</h4>
-                  </div>
-                  <div className='form-container form-error'>
-                    <div className='form-group'>
-                      <input
-                        type='email'
-                        className='form-control'
-                        name='email'
-                        id='RecoverEmail'
-                        autoCorrect='off'
-                        autoCapitalize='off'
-                        autoComplete='email'
-                        placeholder='Email'
-                      />
-                    </div>
-                  </div>
-                  <div className='form-container'>
-                    <button className='btn'>Submit</button>
-                    <a href='#login' className='btn'>
-                      Cancel
-                    </a>
-                  </div>
-                </form>
-              </div> */}
               <div className='text-center'>
                 <h2>Login</h2>
               </div>

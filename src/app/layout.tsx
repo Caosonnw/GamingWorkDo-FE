@@ -4,6 +4,7 @@ import './globals.scss'
 import { cn } from '@/lib/utils'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { AlertProvider } from '@/context/AlertContext'
+import AppProvider from '@/context/AppProvider'
 
 const fontSans = Outfit({
   subsets: ['latin'],
@@ -23,7 +24,9 @@ export default function RootLayout({
     <html lang='en' suppressHydrationWarning>
       <body className={cn('min-h-screen bg-background font-sans antialiased', fontSans.variable)}>
         <ThemeProvider attribute='class' defaultTheme='light' enableSystem disableTransitionOnChange>
-          <AlertProvider>{children}</AlertProvider>
+          <AppProvider>
+            <AlertProvider>{children}</AlertProvider>
+          </AppProvider>
         </ThemeProvider>
       </body>
     </html>

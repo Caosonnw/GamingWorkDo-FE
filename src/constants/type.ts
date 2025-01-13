@@ -1,7 +1,12 @@
 export const Role = {
-  Owner: 'Owner',
-  Employee: 'Employee',
-  User: 'User'
+  OWNER: 'OWNER',
+  ADMIN: 'ADMIN',
+  USER: 'USER'
 } as const
 
-export const RoleValues = [Role.Owner, Role.Employee, Role.User] as const
+export const RoleValues = [Role.OWNER, Role.ADMIN, Role.USER] as const
+
+export const TokenType = {
+  AccessToken: 'AccessToken',
+  RefreshToken: 'RefreshToken'
+} as const
