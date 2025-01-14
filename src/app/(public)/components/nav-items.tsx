@@ -140,28 +140,96 @@ export default function NavItems({ className }: { className?: string }) {
                   onMouseEnter={() => handleMouseEnter('product')}
                   onMouseLeave={handleMouseLeave}
                 >
-                  <a href='javascript:;'>Product</a>
-                  <div className={`menu-dropdown ${activeMenu === 'product' ? 'open_menu' : ''}`}>
-                    <ul className='mobile-menu-wrapper'>
-                      <li>
-                        <a href='/products/alien-ware-monitor-t-46'>Alien ware Monitor</a>
-                      </li>
-                      <li>
-                        <a href='/products/g-series-curved-va-monitor'>G-Series Curved VA Monitor</a>
-                      </li>
-                      <li>
-                        <a href='/products/cloud-alpha-gaming-headset'>Cloud Alpha Gaming Headset</a>
-                      </li>
-                      <li>
-                        <a href='/products/dualsense-wireless-controllers'>DualSense Wireless Controllers</a>
-                      </li>
-                      <li>
-                        <a href='/products/raptor-gameing-z95'>Raptor Gameing Z95</a>
-                      </li>
-                      <li>
-                        <a href='/products/kd-dmtr-gaming-desktop-pc'>KD DMTR Gaming Desktop PC</a>
-                      </li>
-                    </ul>
+                  <a href='/'>Product</a>
+                  <div className={`mega-menu menu-dropdown ${activeMenu === 'product' ? 'open_menu' : ''}`}>
+                    <div className='mobile-sub-title flex items-center border-b p-3 md:hidden'>
+                      <div className='back-menu-button flex items-center cursor-pointer'>
+                        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 512' className='w-5 h-5 mr-2'>
+                          <path d='M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z' />
+                        </svg>
+                        Product
+                      </div>
+                    </div>
+                    <div className='mega-menu-container container mx-auto px-64 py-2'>
+                      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
+                        <div className='megamenu-card'>
+                          <div className='megamenu-card-inner'>
+                            <div className='megamenu-image'>
+                              <a className='block aspect-w-1 aspect-h-1' tabIndex={0}>
+                                <img
+                                  src='/img/gaming-desktop-pc-computer-setup-gamer-illustration.webp'
+                                  alt='megamenu-image'
+                                  loading='lazy'
+                                  className='object-cover w-full h-full'
+                                />
+                              </a>
+                            </div>
+                            <div className='megamenu-content'>
+                              <a tabIndex={0} className='text-center'>
+                                Gaming Mirror
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                        <div className='megamenu-card'>
+                          <div className='megamenu-card-inner'>
+                            <div className='megamenu-image'>
+                              <a className='block aspect-w-1 aspect-h-1' tabIndex={0}>
+                                <img
+                                  src='/img/gaming-desktop-pc-computer-setup-gamer-headphone.webp'
+                                  alt='megamenu-image'
+                                  loading='lazy'
+                                  className='object-cover w-full h-full'
+                                />
+                              </a>
+                            </div>
+                            <div className='megamenu-content'>
+                              <a tabIndex={0} className='text-center'>
+                                Gaming Headphone
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                        <div className='megamenu-card'>
+                          <div className='megamenu-card-inner'>
+                            <div className='megamenu-image'>
+                              <a className='block aspect-w-1 aspect-h-1' tabIndex={0}>
+                                <img
+                                  src='/img/young-man-wearing-vr-goggles-video-game.webp'
+                                  alt='megamenu-image'
+                                  loading='lazy'
+                                  className='object-cover w-full h-full'
+                                />
+                              </a>
+                            </div>
+                            <div className='megamenu-content'>
+                              <a tabIndex={0} className='text-center'>
+                                Gaming VR
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                        <div className='megamenu-card'>
+                          <div className='megamenu-card-inner'>
+                            <div className='megamenu-image'>
+                              <a className='block aspect-w-1 aspect-h-1' tabIndex={0}>
+                                <img
+                                  src='/img/professional-gamer-high-tech-game-room.webp'
+                                  alt='megamenu-image'
+                                  loading='lazy'
+                                  className='object-cover w-full h-full'
+                                />
+                              </a>
+                            </div>
+                            <div className='megamenu-content'>
+                              <a tabIndex={0} className='text-center'>
+                                Gaming PCs
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </li>
                 <li
@@ -174,6 +242,31 @@ export default function NavItems({ className }: { className?: string }) {
                     <ul className='mobile-menu-wrapper'>
                       <li>
                         <a href='/products/alien-ware-monitor-t-46'>About</a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <li
+                  className={`menu-lnk main-menu has-item ${activeMenu === 'blog' ? 'menu_active' : ''}`}
+                  onMouseEnter={() => handleMouseEnter('blog')}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  <a href='/'>Blogs</a>
+                  <div className={`menu-dropdown ${activeMenu === 'blog' ? 'open_menu' : ''}`}>
+                    <div className='mobile-sub-title '>
+                      <div className='back-menu-button flex align-center'>
+                        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 512'>
+                          <path d='M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z' />
+                        </svg>
+                        Blogs
+                      </div>
+                    </div>
+                    <ul className='mobile-menu-wrapper' id='menu_85407968-9bee-4175-bd2c-598de921929a'>
+                      <li>
+                        <a href='/blogs/news'>Blog Page</a>
+                      </li>
+                      <li>
+                        <a href='/blogs/news/best-gamers-desk-settings-for-amateurs-5'>Article Page</a>
                       </li>
                     </ul>
                   </div>

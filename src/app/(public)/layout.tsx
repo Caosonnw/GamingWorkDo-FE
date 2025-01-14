@@ -1,5 +1,5 @@
-import Footer from '@/app/(public)/footer'
-import NavItems from '@/app/(public)/nav-items'
+import Footer from '@/app/(public)/components/footer'
+import NavItems from '@/app/(public)/components/nav-items'
 import React from 'react'
 
 export default function layout({
