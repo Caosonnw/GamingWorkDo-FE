@@ -2,18 +2,17 @@
 
 import { path } from '@/common/path'
 import { DatePicker } from '@/components/date-picker'
-import { Button } from '@/components/ui/button'
-import { Calendar } from '@/components/ui/calendar'
-import { Form, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { useAlert } from '@/context/AlertContext'
 import { RegisterBody, RegisterBodyType } from '@/schema/auth.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Label } from '@radix-ui/react-label'
 import { format } from 'date-fns'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
+import { Form, FormField, FormItem, FormMessage } from '@/components/ui/form'
+import { Label } from '@/components/ui/label'
+import { Button } from '@/components/ui/button'
 
 export default function RegisterForm() {
   const { showAlert } = useAlert()

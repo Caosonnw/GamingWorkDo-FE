@@ -111,7 +111,7 @@ const products = [
 export default function Product() {
   return (
     <section className='shopify-section product-sec relative w-full mx-auto py-[70px]'>
-      <div className='container max-w-[1280px]' data-type='featured-product'>
+      <div className='container sm:max-w-[1280px] md:px-10' data-type='featured-product'>
         <div className='section-title flex items-center justify-between'>
           <h2 className='!text-white'>
             <b>Best Seller</b> of the week
@@ -159,7 +159,7 @@ export default function Product() {
           640: { slidesPerView: 2 },
           768: { slidesPerView: 2 },
           1024: { slidesPerView: 3 },
-          1280: { slidesPerView: 3 },
+          1280: { slidesPerView: 4 },
           1920: { slidesPerView: 4 }
         }}
         className='product-card-slider !pb-[40px]'
