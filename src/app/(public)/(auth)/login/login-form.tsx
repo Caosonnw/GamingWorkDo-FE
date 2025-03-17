@@ -5,18 +5,23 @@ import { Button } from '@/components/ui/button'
 import { Form, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { useAlert } from '@/context/AlertContext'
+import { useAppContext } from '@/context/AppProvider'
 import { decodeToken, handleErrorApi } from '@/lib/utils'
 import { useLoginMutation } from '@/queries/useAuth'
 import { LoginBodyType, LoginSchema } from '@/schema/auth.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Label } from '@radix-ui/react-label'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 export default function LoginForm() {
+  const searchParams = useSearchParams()
   const loginMutation = useLoginMutation()
   const { showAlert } = useAlert()
   const router = useRouter()
+  const { setRole } = useAppContext()
+  const clearTokens = searchParams.get('clearTokens')
 
   const form = useForm({
     resolver: zodResolver(LoginSchema),
@@ -26,6 +31,12 @@ export default function LoginForm() {
     }
   })
 
+  useEffect(() => {
+    if (clearTokens) {
+      setRole(undefined)
+    }
+  }, [clearTokens, setRole])
+
   const onSubmit = async (data: LoginBodyType) => {
     // Khi nhấn submit thì React hook form sẽ tự động validate cái form bằng zod schema ở client trước
     // Nếu không pass qua vòng này thì sẽ không gọi api
@@ -34,7 +45,7 @@ export default function LoginForm() {
       const result = await loginMutation.mutateAsync(data)
       showAlert(result.payload.message, 'success')
       const roleDecoded = decodeToken(result.payload.data.accessToken).role
-      // setRole(roleDecoded)
+      setRole(roleDecoded)
       router.push(path.home)
     } catch (error: any) {
       handleErrorApi({ error, setError: form.setError })

@@ -1,11 +1,37 @@
 'use client'
 
 import { path } from '@/common/path'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { Role } from '@/constants/type'
+import { useAlert } from '@/context/AlertContext'
+import { useAppContext } from '@/context/AppProvider'
+import { handleErrorApi } from '@/lib/utils'
+import { useLogoutMutation } from '@/queries/useAuth'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 export default function NavItems({ className }: { className?: string }) {
   const [activeMenu, setActiveMenu] = useState<string | null>(null)
+  const logoutMutation = useLogoutMutation()
+  const router = useRouter()
+  const { role, setRole } = useAppContext()
+  const { showAlert } = useAlert()
+
+  const handleLogout = async () => {
+    if (logoutMutation.isPending) return
+    try {
+      await logoutMutation.mutateAsync()
+      showAlert('Đăng xuất thành công', 'success')
+      setRole()
+      router.push(path.home)
+    } catch (error: any) {
+      handleErrorApi({
+        error,
+        setError: () => {}
+      })
+    }
+  }
 
   const handleMouseEnter = (menu: string) => {
     setActiveMenu(menu)
@@ -191,7 +217,6 @@ export default function NavItems({ className }: { className?: string }) {
               <li className='cart-header'>
                 <a href='javascript:;' tabIndex={0} className='main-cart flex items-center'>
                   <span className='cart-price'>
-                    {' '}
                     My Cart:
                     <b>$0.00</b>
                   </span>
@@ -218,38 +243,61 @@ export default function NavItems({ className }: { className?: string }) {
                   </svg>
                 </a>
               </li>
-              <li className='profile-header'>
-                <a href={path.login} tabIndex={0}>
-                  <svg xmlns='http://www.w3.org/2000/svg' width={19} height={19} viewBox='0 0 19 19' fill='none'>
-                    <path
-                      d='M16.854 11.6205C16.2473 11.0874 15.5116 10.6268 14.667 10.2515C14.306 10.0912 13.8835 10.2538 13.7232 10.6147C13.5628 10.9755 13.7254 11.398 14.0863 11.5585C14.7984 11.875 15.4121 12.2572 15.91 12.6948C16.5239 13.2342 16.876 14.0152 16.876 14.838V16.1609C16.876 16.5551 16.5551 16.876 16.1609 16.876H2.14525C1.75098 16.876 1.43017 16.5551 1.43017 16.1609V14.838C1.43017 14.0152 1.78226 13.2342 2.39609 12.6948C3.11857 12.0599 5.2236 10.5832 9.15306 10.5832C12.0708 10.5832 14.4447 8.20935 14.4447 5.29161C14.4447 2.37388 12.0708 0 9.15306 0C6.23533 0 3.86145 2.37388 3.86145 5.29161C3.86145 6.99734 4.6729 8.51689 5.92988 9.48518C3.62988 9.99077 2.19916 10.964 1.45209 11.6205C0.529329 12.4313 0 13.6039 0 14.838V16.1609C0 17.3438 0.962289 18.3061 2.14525 18.3061H16.1609C17.3438 18.3061 18.3061 17.3438 18.3061 16.1609V14.838C18.3061 13.6039 17.7768 12.4313 16.854 11.6205ZM5.29161 5.29161C5.29161 3.16243 7.02387 1.43017 9.15306 1.43017C11.2822 1.43017 13.0145 3.16243 13.0145 5.29161C13.0145 7.4208 11.2822 9.15306 9.15306 9.15306C7.02387 9.15306 5.29161 7.4208 5.29161 5.29161Z'
-                      fill='white'
-                    />
-                  </svg>
-                </a>
-              </li>
-              {/* <li className='mobile-menu mobile-only'>
-                <button className='mobile-menu-button'>
-                  <div className='one' />
-                  <div className='two' />
-                  <div className='three' />
-                </button>
-              </li> */}
-              {/* <li className='languages menu-lnk main-menu has-item'>
-                <noscript>
-                  &lt;form method="post" action="/localization" id="FooterLanguageFormNoScript" accept-charset="UTF-8"
-                  class="localization-form" enctype="multipart/form-data"&gt;&lt;input type="hidden" name="form_type"
-                  value="localization" /&gt;&lt;input type="hidden" name="utf8" value="✓" /&gt;&lt;input type="hidden"
-                  name="_method" value="put" /&gt;&lt;input type="hidden" name="return_to" value="/" /&gt;&lt;div
-                  class="localization-form__select"&gt; &lt;h2 class="visually-hidden"
-                  id="FooterLanguageLabelNoScript"&gt;Language&lt;/h2&gt; &lt;select class="localization-selector link"
-                  name="locale_code" aria-labelledby="FooterLanguageLabelNoScript"&gt;&lt;option value="en" lang="en"
-                  selected&gt; English &lt;/option&gt;&lt;option value="ar" lang="ar"&gt; العربية
-                  &lt;/option&gt;&lt;option value="de" lang="de"&gt; Deutsch &lt;/option&gt;&lt;option value="es"
-                  lang="es"&gt; Español &lt;/option&gt;&lt;/select&gt; &lt;/div&gt; &lt;button class="button
-                  button--tertiary"&gt;Update language&lt;/button&gt;&lt;/form&gt;
-                </noscript>
-              </li> */}
+              {role ? (
+                <li className='relative profile-header'>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger>
+                      <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        width={19}
+                        height={19}
+                        viewBox='0 0 19 19'
+                        fill='currentColor'
+                      >
+                        <path
+                          d='M16.854 11.6205C16.2473 11.0874 15.5116 10.6268 14.667 10.2515C14.306 10.0912 13.8835 10.2538 13.7232 10.6147C13.5628 10.9755 13.7254 11.398 14.0863 11.5585C14.7984 11.875 15.4121 12.2572 15.91 12.6948C16.5239 13.2342 16.876 14.0152 16.876 14.838V16.1609C16.876 16.5551 16.5551 16.876 16.1609 16.876H2.14525C1.75098 16.876 1.43017 16.5551 1.43017 16.1609V14.838C1.43017 14.0152 1.78226 13.2342 2.39609 12.6948C3.11857 12.0599 5.2236 10.5832 9.15306 10.5832C12.0708 10.5832 14.4447 8.20935 14.4447 5.29161C14.4447 2.37388 12.0708 0 9.15306 0C6.23533 0 3.86145 2.37388 3.86145 5.29161C3.86145 6.99734 4.6729 8.51689 5.92988 9.48518C3.62988 9.99077 2.19916 10.964 1.45209 11.6205C0.529329 12.4313 0 13.6039 0 14.838V16.1609C0 17.3438 0.962289 18.3061 2.14525 18.3061H16.1609C17.3438 18.3061 18.3061 17.3438 18.3061 16.1609V14.838C18.3061 13.6039 17.7768 12.4313 16.854 11.6205ZM5.29161 5.29161C5.29161 3.16243 7.02387 1.43017 9.15306 1.43017C11.2822 1.43017 13.0145 3.16243 13.0145 5.29161C13.0145 7.4208 11.2822 9.15306 9.15306 9.15306C7.02387 9.15306 5.29161 7.4208 5.29161 5.29161Z'
+                          fill='white'
+                        />
+                      </svg>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align='end' className='mt-4 bg-black text-white border-black font-semibold'>
+                      <DropdownMenuItem asChild className='cursor-pointer'>
+                        <Link href={path.profile}>Profile</Link>
+                      </DropdownMenuItem>
+                      {role === Role.USER && (
+                        <DropdownMenuItem asChild className='cursor-pointer'>
+                          <Link href={path.guest.order}>Order</Link>
+                        </DropdownMenuItem>
+                      )}
+                      {role === Role.OWNER && (
+                        <DropdownMenuItem asChild className='cursor-pointer'>
+                          <Link href={path.admin}>Dashboard</Link>
+                        </DropdownMenuItem>
+                      )}
+                      <DropdownMenuItem onClick={handleLogout} className='cursor-pointer'>
+                        Logout
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </li>
+              ) : (
+                <li className='profile-header'>
+                  <a href={path.login}>
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      width={19}
+                      height={19}
+                      viewBox='0 0 19 19'
+                      fill='currentColor'
+                    >
+                      <path
+                        d='M16.854 11.6205C16.2473 11.0874 15.5116 10.6268 14.667 10.2515C14.306 10.0912 13.8835 10.2538 13.7232 10.6147C13.5628 10.9755 13.7254 11.398 14.0863 11.5585C14.7984 11.875 15.4121 12.2572 15.91 12.6948C16.5239 13.2342 16.876 14.0152 16.876 14.838V16.1609C16.876 16.5551 16.5551 16.876 16.1609 16.876H2.14525C1.75098 16.876 1.43017 16.5551 1.43017 16.1609V14.838C1.43017 14.0152 1.78226 13.2342 2.39609 12.6948C3.11857 12.0599 5.2236 10.5832 9.15306 10.5832C12.0708 10.5832 14.4447 8.20935 14.4447 5.29161C14.4447 2.37388 12.0708 0 9.15306 0C6.23533 0 3.86145 2.37388 3.86145 5.29161C3.86145 6.99734 4.6729 8.51689 5.92988 9.48518C3.62988 9.99077 2.19916 10.964 1.45209 11.6205C0.529329 12.4313 0 13.6039 0 14.838V16.1609C0 17.3438 0.962289 18.3061 2.14525 18.3061H16.1609C17.3438 18.3061 18.3061 17.3438 18.3061 16.1609V14.838C18.3061 13.6039 17.7768 12.4313 16.854 11.6205ZM5.29161 5.29161C5.29161 3.16243 7.02387 1.43017 9.15306 1.43017C11.2822 1.43017 13.0145 3.16243 13.0145 5.29161C13.0145 7.4208 11.2822 9.15306 9.15306 9.15306C7.02387 9.15306 5.29161 7.4208 5.29161 5.29161Z'
+                        fill='white'
+                      />
+                    </svg>
+                  </a>
+                </li>
+              )}
             </ul>
           </div>
         </div>

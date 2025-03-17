@@ -5,27 +5,27 @@ const menuItems = [
   {
     title: 'Dashboard',
     Icon: Home,
-    href: path.home
+    href: path.admin
   },
   {
     title: 'Orders',
     Icon: ShoppingCart,
-    href: path.home
+    href: path.adminOrders
   },
   {
     title: 'Products',
     Icon: Gamepad2,
-    href: path.home
+    href: path.adminProducts
   },
   {
     title: 'Users',
     Icon: Users2,
-    href: path.home
+    href: path.adminUsers
   },
   {
     title: 'Analytics',
     Icon: LineChart,
-    href: path.home
+    href: path.adminAnalytics
   }
 ]
 

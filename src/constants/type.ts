@@ -10,3 +10,8 @@ export const TokenType = {
   AccessToken: 'AccessToken',
   RefreshToken: 'RefreshToken'
 } as const
+
+export const StatusProduct = {
+  Available: 'Available',
+  OutOfStock: 'Out of Stock'
+}

@@ -8,12 +8,15 @@ const nextConfig: NextConfig = {
         hostname: 'localhost',
         port: '8080',
         pathname: '/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'github.com',
+        pathname: '/**'
       }
     ]
   },
-  devIndicators: {
-    appIsrStatus: false
-  },
+  devIndicators: false,
   eslint: {
     ignoreDuringBuilds: true
   }
