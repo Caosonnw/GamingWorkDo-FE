@@ -42,7 +42,7 @@ export default function NavItems({ className }: { className?: string }) {
     setActiveMenu(null)
   }
 
-  const { addToCart, toggleCart } = useAddToCartContext()
+  const { toggleCart } = useAddToCartContext()
   return (
     <header className='site-header'>
       <div className='main-navigationbar sticky-header'>
