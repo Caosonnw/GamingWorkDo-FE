@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { AlertProvider } from '@/context/AlertContext'
 import AppProvider from '@/context/AppProvider'
+import AddToCartProvider from '@/context/AddToCartProvider'
 
 const fontSans = Outfit({
   subsets: ['latin'],
@@ -25,7 +26,9 @@ export default function RootLayout({
       <body className={cn('min-h-screen bg-background font-sans antialiased', fontSans.variable)}>
         <ThemeProvider>
           <AppProvider>
-            <AlertProvider>{children}</AlertProvider>
+            <AddToCartProvider>
+              <AlertProvider>{children}</AlertProvider>
+            </AddToCartProvider>
           </AppProvider>
         </ThemeProvider>
       </body>

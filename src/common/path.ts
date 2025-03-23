@@ -12,6 +12,7 @@ export const path = {
   adminOrders: '/admin/orders',
   adminAnalytics: '/admin/analytics',
   adminSettings: '/admin/settings',
+  adminChatSupport: '/admin/chat-support',
   guest: {
     order: '/guest/orders'
   }

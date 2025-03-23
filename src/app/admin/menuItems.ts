@@ -1,5 +1,5 @@
 import { path } from '@/common/path'
-import { Home, LineChart, ShoppingCart, Users2, Salad, Table, Gamepad2 } from 'lucide-react'
+import { Home, LineChart, ShoppingCart, Users2, Salad, Table, Gamepad2, MessageSquare } from 'lucide-react'
 
 const menuItems = [
   {
@@ -26,6 +26,11 @@ const menuItems = [
     title: 'Analytics',
     Icon: LineChart,
     href: path.adminAnalytics
+  },
+  {
+    title: 'Chat Support',
+    Icon: MessageSquare,
+    href: path.adminChatSupport
   }
 ]
 

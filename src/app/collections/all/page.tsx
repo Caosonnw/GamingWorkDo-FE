@@ -1,9 +1,16 @@
 'use client'
 
+import { path } from '@/common/path'
 import { Rating, RatingButton } from '@/components/rating'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
+import { useAddToCartContext } from '@/context/AddToCartProvider'
+import { useAlert } from '@/context/AlertContext'
+import { decodeToken, getAccessTokenFromLocalStorage } from '@/lib/utils'
+import { useAddProductToCart } from '@/queries/useCart'
 import { useGetAllProducts } from '@/queries/useProduct'
+import { useQueryClient } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 export default function All() {
@@ -13,13 +20,16 @@ export default function All() {
   const [maxPrice, setMaxPrice] = useState(940)
   const productListQuery = useGetAllProducts()
   const product: any[] = productListQuery.data?.payload.data ?? []
+  const { showAlert } = useAlert()
+  const navigate = useRouter()
 
   const handleReset = () => {
     setMinPrice(0)
     setMaxPrice(940)
   }
+  const { toggleCart } = useAddToCartContext()
+  const queryClient = useQueryClient()
 
-  // State lưu variant được chọn cho từng sản phẩm
   const [selectedVariants, setSelectedVariants] = useState(
     product.reduce((acc, product) => {
       acc[product.product_id] = product.product_variants[0]?.variant_id || null
@@ -33,6 +43,37 @@ export default function All() {
       [productId]: variantId
     }))
   }
+
+  const { mutate: addProductMutate } = useAddProductToCart()
+
+  const handleAddToCart = (variantId: number) => {
+    const token = getAccessTokenFromLocalStorage()
+    if (token) {
+      const decoded = token ? decodeToken(token) : null
+      if (!decoded?.user_id) {
+        showAlert('Please login before adding to cart.', 'error')
+        return
+      }
+
+      addProductMutate(
+        { user_id: decoded.user_id, product_variant_id: variantId, quantity: 1 },
+        {
+          onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['getCartByUserId', decoded.user_id] }).then(() => {
+              toggleCart()
+            })
+          },
+          onError: (error: any) => {
+            console.error('Add to cart failed:', error)
+          }
+        }
+      )
+    } else {
+      navigate.push(path.login)
+      showAlert('Please login before adding to cart.', 'error')
+    }
+  }
+
   return (
     <>
       <section className='common-banner-sec'>
@@ -245,9 +286,11 @@ export default function All() {
                       <div className='grid grid-cols-12 row pro-list product-grid-view'>
                         {product.map((item) => {
                           const selectedVariant =
-                            item.product_variants.find(
-                              (variant: any) => variant.variant_id === selectedVariants[item.product_id]
-                            ) || item.product_variants[0]
+                            (Array.isArray(item.product_variants) &&
+                              item.product_variants.find(
+                                (variant: any) => variant.variant_id === selectedVariants[item.product_id]
+                              )) ||
+                            item.product_variants?.[0]
 
                           return (
                             <div
@@ -407,7 +450,14 @@ export default function All() {
                                           }).format(selectedVariant?.variant_price || 0)}
                                         </p>
                                       </div>
-                                      <Button type='submit' className='btn'>
+                                      <Button
+                                        type='submit'
+                                        className='btn'
+                                        onClick={(e) => {
+                                          e.stopPropagation()
+                                          handleAddToCart(selectedVariant.variant_id)
+                                        }}
+                                      >
                                         Add To Cart
                                       </Button>
                                     </div>

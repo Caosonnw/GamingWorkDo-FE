@@ -3,6 +3,7 @@
 import { path } from '@/common/path'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Role } from '@/constants/type'
+import { useAddToCartContext } from '@/context/AddToCartProvider'
 import { useAlert } from '@/context/AlertContext'
 import { useAppContext } from '@/context/AppProvider'
 import { handleErrorApi } from '@/lib/utils'
@@ -22,7 +23,7 @@ export default function NavItems({ className }: { className?: string }) {
     if (logoutMutation.isPending) return
     try {
       await logoutMutation.mutateAsync()
-      showAlert('Đăng xuất thành công', 'success')
+      showAlert('Logout Successfully!', 'success')
       setRole()
       router.push(path.home)
     } catch (error: any) {
@@ -40,6 +41,8 @@ export default function NavItems({ className }: { className?: string }) {
   const handleMouseLeave = () => {
     setActiveMenu(null)
   }
+
+  const { addToCart, toggleCart } = useAddToCartContext()
   return (
     <header className='site-header'>
       <div className='main-navigationbar sticky-header'>
@@ -215,7 +218,7 @@ export default function NavItems({ className }: { className?: string }) {
             </div>
             <ul className='menu-item-right flex items-center'>
               <li className='cart-header'>
-                <a href='javascript:;' tabIndex={0} className='main-cart flex items-center'>
+                <a onClick={toggleCart} tabIndex={0} className='main-cart flex items-center hover:cursor-pointer'>
                   <span className='cart-price'>
                     My Cart:
                     <b>$0.00</b>

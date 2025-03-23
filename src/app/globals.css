@@ -1762,3 +1762,179 @@ body:not(.index) .site-header {
   border-radius: 0 15px 0 15px;
   z-index: -1;
 }
+
+/* Add to Cart  */
+.common-close {
+  position: relative;
+  transition: all 0.5s ease-in-out 0s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: linear-gradient(93.25deg, #0098ff 4.45%, #7c34c8 93.88%);
+  cursor: pointer;
+}
+.common-close:hover {
+  transform: rotate(90deg);
+}
+.mini-cart-header {
+  background: linear-gradient(#ffffff 0 0) padding-box,
+    linear-gradient(93.25deg, #0098ff 4.45%, #7c34c8 93.88%) border-box;
+  border-bottom: 2px solid transparent;
+}
+.minicart__warnings {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  a {
+    border-radius: 0 10px;
+  }
+  a:hover {
+    border-radius: 10px 0;
+  }
+}
+.free-shipping-bar {
+  margin-bottom: 20px;
+}
+.free-shipping-txt {
+  font-size: 16px;
+  line-height: 22px;
+  text-transform: capitalize;
+}
+.cart-progress-bar {
+  position: relative;
+  height: 7px;
+  border-radius: 5px;
+  display: flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 30px auto 0;
+  width: 100%;
+  gap: 5px;
+}
+progress[value] {
+  appearance: none;
+  border: none;
+  position: relative;
+  margin: 0;
+  height: 7px;
+  transition: all 0.3s linear;
+  width: 100%;
+}
+@keyframes move {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -60px -60px;
+  }
+}
+progress:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-image: -o-linear-gradient(
+    315deg,
+    rgba(255, 255, 255, 0.2) 0,
+    rgba(255, 255, 255, 0.2) 25%,
+    rgba(255, 255, 255, 0) 25%,
+    rgba(255, 255, 255, 0) 50%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0.2) 75%,
+    rgba(255, 255, 255, 0) 75%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-image: linear-gradient(135deg, #fff3 0 25%, #fff0 25% 50%, #fff3 50% 75%, #fff0 75% 100%);
+  z-index: 1;
+  animation: move 5s linear infinite;
+  border-radius: 5px;
+  overflow: hidden;
+  background-size: 45px 45px;
+}
+@keyframes blinkers {
+  0% {
+    transform: translateY(-50%) scale(0.9);
+  }
+  50% {
+    transform: translateY(-50%) scale(1);
+  }
+  100% {
+    transform: translateY(-50%) scale(0.9);
+  }
+}
+.progress-icon {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(93.25deg, #0098ff 4.45%, #7c34c8 93.88%);
+  border-radius: 50%;
+  top: 20px;
+  right: 0;
+  flex-shrink: 0;
+  animation: blinkers 1.5s infinite;
+}
+.progress-icon svg {
+  width: 30px;
+  height: 30px;
+}
+.progress-icon svg path {
+  fill: #ffffff;
+}
+progress[value]::-webkit-progress-bar {
+  position: relative;
+  border-radius: 5px;
+  background-color: #cccccc;
+}
+progress[value]::-webkit-progress-value {
+  position: relative;
+  border-radius: 5px;
+  background: linear-gradient(93.25deg, #0098ff 4.45%, #7c34c8 93.88%);
+}
+progress[value]::-moz-progress-bar {
+  position: relative;
+  border-radius: 5px;
+  background: linear-gradient(93.25deg, #0098ff 4.45%, #7c34c8 93.88%);
+}
+.mini-cart-image {
+  padding: 5px;
+  width: 100px;
+  height: 130px;
+  border-radius: 0 10px;
+  background: -o-linear-gradient(#ffffff 0 0) padding-box,
+    linear-gradient(93.25deg, #0098ff 4.45%, #7c34c8 93.88%) border-box;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ffffff)) padding-box,
+    linear-gradient(93.25deg, #0098ff 4.45%, #7c34c8 93.88%) border-box;
+  background: linear-gradient(#ffffff 0 0) padding-box,
+    linear-gradient(93.25deg, #0098ff 4.45%, #7c34c8 93.88%) border-box;
+  border: 1px solid transparent;
+}
+.mini-cart-item {
+  padding: 12px 0;
+  background: -o-linear-gradient(#ffffff 0 0) padding-box,
+    linear-gradient(93.25deg, #0098ff 4.45%, #7c34c8 93.88%) border-box;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ffffff)) padding-box,
+    linear-gradient(93.25deg, #0098ff 4.45%, #7c34c8 93.88%) border-box;
+  background: linear-gradient(#ffffff 0 0) padding-box,
+    linear-gradient(93.25deg, #0098ff 4.45%, #7c34c8 93.88%) border-box;
+  border-bottom: 1px solid transparent;
+}
